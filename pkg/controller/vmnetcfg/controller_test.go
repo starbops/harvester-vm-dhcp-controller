@@ -655,7 +655,7 @@ func TestHandler_Sync(t *testing.T) {
 		assert.Equal(t, expectedCacheAllocator, handler.cacheAllocator)
 	})
 
-	t.Run("sync new vmnetcfg with empty network config should error", func(t *testing.T) {
+	t.Run("sync new vmnetcfg with empty network config should succeed", func(t *testing.T) {
 		givenVmNetCfg := newTestVmNetCfgBuilder().Build()
 		givenIPPool := newTestIPPoolBuilder().
 			ServerIP(testServerIP).
@@ -691,7 +691,7 @@ func TestHandler_Sync(t *testing.T) {
 		}
 
 		status, err := handler.Sync(givenVmNetCfg, givenVmNetCfg.Status)
-		assert.Equal(t, fmt.Sprintf("vmnetcfg %s/%s has no network configs", testVmNetCfgNamespace, testVmNetCfgName), err.Error())
+		assert.Nil(t, err)
 
 		SanitizeStatus(&expectedStatus)
 		SanitizeStatus(&status)
